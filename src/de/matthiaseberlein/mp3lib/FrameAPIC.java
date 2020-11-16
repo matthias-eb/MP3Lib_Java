@@ -82,11 +82,7 @@ public class FrameAPIC extends Frame {
 				cnt++;
 			}
 
-			// This creates the bridge needed to ignore Android as long as it doesn't matter
-			if(using_Android)
-				image=new Image_Android(mime_type, picture_type, s.getBytes());
-			else
-				image = new Image(mime_type, picture_type, s.getBytes());
+			image = new Image(mime_type, picture_type, s.getBytes());
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -179,7 +175,7 @@ public class FrameAPIC extends Frame {
 					break;
 				case IMAGE:
 					try {
-						image = (Image_Android) info.getObject();
+						image = (Image) info.getObject();
 						sizeChanged=true;
 					} catch(ClassCastException ex){
 						ret=false;

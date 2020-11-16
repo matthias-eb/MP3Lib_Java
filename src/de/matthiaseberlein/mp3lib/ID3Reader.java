@@ -1,7 +1,5 @@
 package de.matthiaseberlein.mp3lib;
 
-import de.matthiaseberlein.localmusicplayer.localmusicplayer.resources.ShellMenuHandler;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -132,7 +130,7 @@ public class ID3Reader{
 						System.out.println("Test: "+comm.toString());
 						holder2.with(key, comm);
 					}
-					else if(Image_Android.class.isAssignableFrom(innerClass)){
+					else if(Image.class.isAssignableFrom(innerClass)){
 						System.out.println("Das Bild selber lässt sich momentan nicht ändern.");
 					}
 					else if(Integer.class.isAssignableFrom(innerClass)){
