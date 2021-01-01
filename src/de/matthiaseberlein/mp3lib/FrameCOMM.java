@@ -22,6 +22,7 @@ public class FrameCOMM extends Frame {
 		String comment="";
 		String content_descr="";
 		LanguageCode language = null;
+		String language_code = null;
 		try {
 			
 			raf=new RandomAccessFile(file,"r");
@@ -41,7 +42,14 @@ public class FrameCOMM extends Frame {
 			else if(read_bytes == -1)
 				System.err.println("Error: End of File was reached while reading.");
 			buffer.position(0);
-			language = LanguageCode.valueOf(String.valueOf(buffer));    //Language is not encoded. Everything after it is.
+
+			language_code = String.valueOf(buffer);
+			try {
+				language = LanguageCode.valueOf(language_code);    //Language is not encoded. Everything after it is.
+			} catch (IllegalArgumentException e) {
+				System.out.println("Frame COMM: Language not known: " + language_code);
+				language = LanguageCode.oth;
+			}
 			buffer.clear();
 			
 			buffer=CharBuffer.allocate(framesize-4);

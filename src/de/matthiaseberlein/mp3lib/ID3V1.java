@@ -172,6 +172,8 @@ class ID3V1 {
 			b=new byte[1];
 			raf.read(b, 0, 1);
 			genre=b[0];
+			if(genre < 0 || genre >= genrelist.length)
+				genre=12;
 			
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
@@ -525,7 +527,7 @@ class ID3V1 {
 		message+=addWall("Interpret: "+ artists, maxwidth, distanceToWall, wall)+"\n";
 		message+=addWall("Album: "+album, maxwidth, distanceToWall, wall)+"\n";
 		message+=addWall("Comment: "+comment, maxwidth, distanceToWall, wall)+"\n";
-		message+=addWall("Genre: "+genrelist[genre], maxwidth, distanceToWall, wall)+"\n";
+		message+=addWall("Genre: "+genrelist[genre & 0xff], maxwidth, distanceToWall, wall)+"\n";
 		message+=addWall("Year: "+year, maxwidth, distanceToWall, wall)+"\n";
 		message+=addWall("Tracknumber: "+tracknmbr, maxwidth, distanceToWall, wall)+"\n";
 		message+=addWall("", maxwidth, distanceToWall, wall)+"\n";

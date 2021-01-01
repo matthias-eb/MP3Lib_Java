@@ -11,9 +11,9 @@ public class ID3Reader{
 		Frame.init();
 		String eing="";
 		File f=null;
+		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
 		if(args.length==0) {
 			System.out.println("Willkommen zum ID3Reader. geben sie eine Datei ein.");
-			BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
 			boolean wiederholen=false;
 			do{
 				wiederholen=false;
@@ -46,7 +46,7 @@ public class ID3Reader{
 		int auswahl=0;
 		ShellMenuHandler menu;
 		do{
-			menu=new ShellMenuHandler("Menü", "Informationen bearbeiten", "Informationen setzen", "Informationen löschen", "Informationsteil hinzufügen", "Informationsteil löschen", "Programm beenden");
+			menu=new ShellMenuHandler("Menü", "Informationen bearbeiten", "Informationen setzen", "Informationen löschen", "Informationsteil hinzufügen", "Informationsteil löschen", "Neue MP3 lesen","Programm beenden");
 			auswahl=menu.getUserChoice();
 			Object[] frorderobjs;
 			String[] frameorder;
@@ -56,7 +56,7 @@ public class ID3Reader{
 			int ausw2, ausw3;
 			ArrayList<String> infoList;
 			switch(auswahl) {
-				case 1:
+				case 1:	//Informationen bearbeiten
 					frorderobjs = song.getCurrentFrameOrder().toArray();
 					frameorder= new String[frorderobjs.length+1];
 					for(int i=0;i<frorderobjs.length; i++) {
@@ -104,7 +104,6 @@ public class ID3Reader{
 					if(ausw3==infoList.size())
 						break;
 					System.out.println("Geben sie einen neuen Wert ein:");
-					BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
 					String key=infoList.get(ausw3-1);
 					holder2.setPosition(0);
 					Class innerClass=null;
@@ -163,7 +162,9 @@ public class ID3Reader{
 					}
 					System.out.println("Erfolg beim Setzen des neuen wertes? "+song.setData(new InformationHolder().with(frameorder[ausw2-1], holder)));
 					break;
-				case 2:
+
+
+				case 2:	//Informationen setzen
 					menu=new ShellMenuHandler("Information auswählen", "TITEL", "ALBUM", "INTERPRETEN", "Titelnummer", "Kommentar", "Jahr", "Genres", "Inhaltstyp", "Position im Song", "Abbrechen");
 					int ausw=menu.getUserChoice();
 					BufferedReader br2=new BufferedReader(new InputStreamReader(System.in));
@@ -308,7 +309,9 @@ public class ID3Reader{
 							
 					}
 					break;
-				case 3:
+
+
+				case 3:	// Informationen löschen
 					frorderobjs = song.getCurrentFrameOrder().toArray();
 					frameorder= new String[frorderobjs.length+1];
 					for(int i=0;i<frorderobjs.length; i++) {
@@ -405,12 +408,39 @@ public class ID3Reader{
 						default:
 					}
 					break;
+
+				case 6:
+					/**
+					 * Enter a new Song to read his ID3Tag Metadata
+					 */
+
+					System.out.println("Geben sie einen Song ein.");
+					boolean wiederholen=false;
+					do{
+						wiederholen=false;
+						eing=br.readLine();
+						if(!eing.endsWith(".mp3"))
+							wiederholen=true;
+						else {
+							f=new File(eing);
+							if(!f.exists())
+								wiederholen=true;
+						}
+						if(wiederholen)
+							System.out.println("Bitte geben sie eine mp3 Datei an. Wenn diese Datei nicht im selben Ordner liegt, wie diese Programm, muss der komplette Pfad angegeben werden.");
+					} while(wiederholen);
+					song=new Song(f.getAbsolutePath());
+					break;
 				default:
 					cont=false;
 					break;
+
+
 			}
-			System.out.println(song.toString());
-			song.showTagRepresentation();
+			if(cont) {
+				System.out.println(song.toString());
+				song.showTagRepresentation();
+			}
 		} while(cont);
 	}
 }

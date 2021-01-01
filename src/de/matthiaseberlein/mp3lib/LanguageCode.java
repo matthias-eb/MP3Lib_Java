@@ -258,6 +258,7 @@ public enum LanguageCode {
 	oro("Oromo"),
 	osa("Osage"),
 	oss("Ossetian / Ossetic"),
+	oth("Other / unknown"),
 	pag("Pangasinan"),
 	pam("Pampanga / Kapampangan"),
 	pan("Panjabi / Punjabi"),

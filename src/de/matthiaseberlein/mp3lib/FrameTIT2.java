@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -29,8 +30,8 @@ public class FrameTIT2 extends Frame {
 			raf.seek(startbyte);
 			
 			encoding=raf.readByte();
-			if(encoding==1) //UTF-16LE funktioniert nicht als Ersatz für UCS-2, daher wird das ganze einfach von Hand gemacht indem UTF-8 gelesen wird und dann der Schrott raus geworfen wird.
-				br=new BufferedReader(new InputStreamReader(new FileInputStream(file), Charset.forName("ISO-8859-1")));
+			if(encoding==1) //UTF-16LE funktioniert nicht als Ersatz für UCS-2, daher wird statdessen UTF-8 gelesen und dann jedes nullbyte entfernt.
+				br=new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.ISO_8859_1));
 			else
 				br=new BufferedReader(new InputStreamReader(new FileInputStream(file), Charset.forName(encodings[encoding])));
 			

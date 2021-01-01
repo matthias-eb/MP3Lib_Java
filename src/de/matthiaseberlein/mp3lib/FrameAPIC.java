@@ -77,6 +77,7 @@ public class FrameAPIC extends Frame {
 			//Remove the leading zero(s)
 			int cnt=0;
 			s=s.substring(index_0+1);
+			System.out.println("Testoutput: s="+s);
 			while(s.charAt(0)==0 && cnt<2) {
 				s = s.substring(1);
 				cnt++;
